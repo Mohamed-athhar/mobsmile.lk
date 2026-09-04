@@ -29,8 +29,8 @@ export type Product = {
   condition: "Brand New" | "Pre-Owned";
   warranty: string;
   price?: number;
-  originalPrice?: number;
-  discountBadge?: string;
+  originalPrice?: number | undefined;
+  discountBadge?: string | undefined;
   availability: "In Stock" | "Pre-Order" | "Low Stock";
   os: string;
   screen: string;
