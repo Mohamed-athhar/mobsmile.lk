@@ -44,13 +44,13 @@ export function Navbar() {
       >
         <Link
           to="/"
-          className="group absolute left-1/2 z-10 flex h-32 w-[30rem] -translate-x-1/2 items-center justify-center sm:h-36 sm:w-[36rem]"
+          className="group absolute left-1/2 z-10 flex h-11 w-11 -translate-x-1/2 items-center justify-center sm:h-36 sm:w-[36rem]"
           aria-label="MOBSMILE home"
         >
           {scrolled ? (
-            <LogoMark className="h-[4.5rem] w-[4.5rem] object-contain sm:h-20 sm:w-20" />
+            <LogoMark className="h-10 w-10 object-contain sm:h-20 sm:w-20" />
           ) : (
-            <LogoWordmark className="h-32 w-[30rem] sm:h-36 sm:w-[36rem]" />
+            <LogoWordmark className="h-11 w-11 sm:h-36 sm:w-[36rem]" />
           )}
         </Link>
 
