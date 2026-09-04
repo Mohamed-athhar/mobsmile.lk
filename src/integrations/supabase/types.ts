@@ -14,7 +14,93 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      inquiries: {
+        Row: {
+          created_at: string
+          id: string
+          message: string
+          product_id: string | null
+          product_name: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message: string
+          product_id?: string | null
+          product_name: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string
+          product_id?: string | null
+          product_name?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          city: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          city?: string | null
+          created_at?: string
+          full_name?: string | null
+          id: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          city?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      saved_products: {
+        Row: {
+          brand: string
+          created_at: string
+          id: string
+          image: string | null
+          model: string
+          product_id: string
+          user_id: string
+        }
+        Insert: {
+          brand: string
+          created_at?: string
+          id?: string
+          image?: string | null
+          model: string
+          product_id: string
+          user_id: string
+        }
+        Update: {
+          brand?: string
+          created_at?: string
+          id?: string
+          image?: string | null
+          model?: string
+          product_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
