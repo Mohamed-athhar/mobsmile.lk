@@ -111,7 +111,7 @@ function mapCard(card: ApiProductCard): Product {
     colors: [],
     condition: CONDITION[card.condition] ?? "Brand New",
     warranty: "Warranty as listed",
-    price: card.fromPrice || undefined,
+    price: card.fromPrice || 0,
     originalPrice: card.hasDiscount ? card.fromOriginalPrice : undefined,
     discountBadge: card.badge ? BADGE_TEXT[card.badge] : undefined,
     availability: card.anyInStock ? "In Stock" : "Pre-Order",
