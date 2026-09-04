@@ -145,7 +145,7 @@ function mapDetail(p: ApiProductDetail): Product {
     colors,
     condition: CONDITION[p.condition] ?? "Brand New",
     warranty: p.warrantyType ?? "Warranty as listed",
-    price: cheapest ? (cheapest.salePrice ?? cheapest.price) : undefined,
+    price: cheapest ? (cheapest.salePrice ?? cheapest.price) : 0,
     originalPrice: cheapest?.salePrice ? cheapest.price : undefined,
     discountBadge: p.badge ? BADGE_TEXT[p.badge] : undefined,
     availability: inStock.length > 0 ? "In Stock" : anyPreOrder ? "Pre-Order" : "Low Stock",
