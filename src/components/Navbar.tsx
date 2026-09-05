@@ -10,8 +10,6 @@ const NAV = [
   { slug: "", name: "Home" },
   ...CATEGORIES.map((c) => ({ slug: c.slug, name: c.name })),
 ];
-const LEFT_NAV = NAV.slice(0, 5);
-const RIGHT_NAV = NAV.slice(5);
 
 function WhatsAppIcon({ className = "h-5 w-5" }: { className?: string }) {
   return (
@@ -63,12 +61,6 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-1.5 sm:gap-2">
-          <div className="relative z-20 hidden items-center gap-5 xl:flex">
-            {RIGHT_NAV.map((item) => (
-              <NavLink key={item.name} item={item} />
-            ))}
-          </div>
-
           <Link
             to="/search"
             className="rounded-full p-2.5 text-foreground/75 transition-colors hover:bg-primary/15 hover:text-primary"
