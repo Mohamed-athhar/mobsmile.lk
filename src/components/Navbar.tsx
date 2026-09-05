@@ -10,8 +10,10 @@ const NAV = [
   { slug: "", name: "Home" },
   ...CATEGORIES.map((c) => ({ slug: c.slug, name: c.name })),
 ];
-const LEFT_NAV = NAV.slice(0, 5);
-const RIGHT_NAV = NAV.slice(5);
+// Audio sits on the left group (per request); Watches stays on the right.
+// NAV index: 0 Home, 1 Smartphones, 2 Tablets, 3 Smart Devices, 4 Laptops, 5 Watches, 6 Audio, 7 Accessories
+const LEFT_NAV = [NAV[0], NAV[1], NAV[2], NAV[3], NAV[4], NAV[6]];
+const RIGHT_NAV = [NAV[5], NAV[7]];
 
 function WhatsAppIcon({ className = "h-5 w-5" }: { className?: string }) {
   return (
@@ -53,7 +55,7 @@ export function Navbar() {
           {scrolled ? (
             <LogoMark className="hidden h-20 w-20 object-contain sm:block" />
           ) : (
-            <LogoWordmark className="hidden h-36 w-[36rem] sm:block" />
+            <LogoWordmark className="hidden h-24 sm:block" />
           )}
         </Link>
 
