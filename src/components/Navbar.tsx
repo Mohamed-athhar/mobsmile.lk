@@ -10,8 +10,6 @@ const NAV = [
   { slug: "", name: "Home" },
   ...CATEGORIES.map((c) => ({ slug: c.slug, name: c.name })),
 ];
-const LEFT_NAV = NAV.slice(0, 5);
-const RIGHT_NAV = NAV.slice(5);
 
 function WhatsAppIcon({ className = "h-5 w-5" }: { className?: string }) {
   return (
@@ -44,32 +42,25 @@ export function Navbar() {
       >
         <Link
           to="/"
-          className="group z-10 flex shrink-0 items-center justify-center sm:absolute sm:left-1/2 sm:h-36 sm:w-[36rem] sm:-translate-x-1/2"
+          className="group z-10 flex shrink-0 items-center"
           aria-label="MOBSMILE home"
         >
-          {/* Mobile: compact mark, in-flow on the left */}
+          {/* Compact mark on mobile, wordmark on desktop — swaps to the mark on scroll */}
           <LogoMark className="h-9 w-9 object-contain sm:hidden" />
-          {/* sm+: centered floating wordmark that swaps to the mark on scroll */}
           {scrolled ? (
-            <LogoMark className="hidden h-20 w-20 object-contain sm:block" />
+            <LogoMark className="hidden h-9 w-9 object-contain sm:block" />
           ) : (
-            <LogoWordmark className="hidden h-36 w-[36rem] sm:block" />
+            <LogoWordmark className="hidden h-12 w-auto sm:block" />
           )}
         </Link>
 
-        <div className="relative z-20 hidden min-w-0 flex-1 items-center gap-5 xl:flex">
-          {LEFT_NAV.map((item) => (
+        <div className="relative z-20 hidden min-w-0 flex-1 items-center justify-center gap-5 xl:flex">
+          {NAV.map((item) => (
             <NavLink key={item.name} item={item} />
           ))}
         </div>
 
         <div className="flex items-center gap-1.5 sm:gap-2">
-          <div className="relative z-20 hidden items-center gap-5 xl:flex">
-            {RIGHT_NAV.map((item) => (
-              <NavLink key={item.name} item={item} />
-            ))}
-          </div>
-
           <Link
             to="/search"
             className="rounded-full p-2.5 text-foreground/75 transition-colors hover:bg-primary/15 hover:text-primary"
