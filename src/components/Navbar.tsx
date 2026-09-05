@@ -50,7 +50,7 @@ export function Navbar() {
           {scrolled ? (
             <LogoMark className="hidden h-9 w-9 object-contain sm:block" />
           ) : (
-            <LogoWordmark className="hidden h-10 w-auto sm:block" />
+            <LogoWordmark className="hidden h-12 w-auto sm:block" />
           )}
         </Link>
 
