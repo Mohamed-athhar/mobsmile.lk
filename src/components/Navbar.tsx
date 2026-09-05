@@ -11,9 +11,10 @@ const NAV = [
   ...CATEGORIES.map((c) => ({ slug: c.slug, name: c.name })),
 ];
 // Audio sits on the left group (per request); Watches stays on the right.
-// NAV index: 0 Home, 1 Smartphones, 2 Tablets, 3 Smart Devices, 4 Laptops, 5 Watches, 6 Audio, 7 Accessories
-const LEFT_NAV = [NAV[0], NAV[1], NAV[2], NAV[3], NAV[4], NAV[6]];
-const RIGHT_NAV = [NAV[5], NAV[7]];
+const LEFT_NAV = ["", "smartphones", "tablets", "smart-devices", "laptops", "audio"].map(
+  (s) => NAV.find((n) => n.slug === s)!,
+);
+const RIGHT_NAV = ["watches", "accessories"].map((s) => NAV.find((n) => n.slug === s)!);
 
 function WhatsAppIcon({ className = "h-5 w-5" }: { className?: string }) {
   return (
