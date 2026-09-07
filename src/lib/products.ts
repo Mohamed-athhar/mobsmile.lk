@@ -6,6 +6,7 @@ import audio from "@/assets/p-audio.jpg";
 import accessory from "@/assets/p-accessory.jpg";
 import type { CategorySlug } from "./site";
 import { fetchLiveProducts, fetchLiveProduct } from "./mobsmile-api";
+import { fetchDbProducts, fetchDbProduct, fetchShopSettings } from "./catalog";
 import { useEffect, useState } from "react";
 
 export type Review = {
@@ -1051,11 +1052,18 @@ export function getHotDeals(products: Product[]): Product[] {
 // admin-managed stock on TOP of it, additively, never replacing it.
 // ---------------------------------------------------------------------
 
-/** Static catalogue + whatever the live backend currently has, merged. */
+/**
+ * Static catalogue + the shop database + (optionally) the external backend.
+ * Database rows win over a static product with the same id, so anything
+ * edited in the admin area shows up straight away.
+ */
 export async function getAllProducts(): Promise<Product[]> {
-  const live = await fetchLiveProducts();
-  if (live.length === 0) return PRODUCTS;
-  return [...live, ...PRODUCTS];
+  const [db, live] = await Promise.all([fetchDbProducts(), fetchLiveProducts()]);
+  const dbIds = new Set(db.map((p) => p.id));
+  const base = PRODUCTS.filter((p) => !dbIds.has(p.id));
+  const merged = [...db, ...base];
+  if (live.length === 0) return merged;
+  return [...live, ...merged];
 }
 
 /**
@@ -1064,6 +1072,8 @@ export async function getAllProducts(): Promise<Product[]> {
  * the static catalogue. Safe to call for any id.
  */
 export async function getProductAsync(id: string): Promise<Product | undefined> {
+  const fromDb = await fetchDbProduct(id);
+  if (fromDb) return fromDb;
   const live = await fetchLiveProduct(id);
   return live ?? getProduct(id);
 }
@@ -1082,6 +1092,7 @@ export function useCatalog(): { products: Product[]; loading: boolean } {
 
   useEffect(() => {
     let active = true;
+    void fetchShopSettings();
     getAllProducts()
       .then((all) => {
         if (active) setProducts(all);

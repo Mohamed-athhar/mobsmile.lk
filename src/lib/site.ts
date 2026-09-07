@@ -1,8 +1,51 @@
-export const WHATSAPP_DISPLAY = "0774312456";
-export const WHATSAPP_NUMBER = "94774312456";
+/**
+ * Defaults below are the fallback only. Once the shop settings load from
+ * the database (see lib/catalog.ts → fetchShopSettings), the runtime
+ * overrides here take over, so the WhatsApp number can be changed from the
+ * admin area without a code change.
+ */
+const DEFAULT_WHATSAPP_DISPLAY = "0774312456";
+const DEFAULT_WHATSAPP_NUMBER = "94774312456";
+
+export const WHATSAPP_DISPLAY = DEFAULT_WHATSAPP_DISPLAY;
+export const WHATSAPP_NUMBER = DEFAULT_WHATSAPP_NUMBER;
+
+let runtime: { number: string; display: string; settings: Record<string, unknown> } = {
+  number: DEFAULT_WHATSAPP_NUMBER,
+  display: DEFAULT_WHATSAPP_DISPLAY,
+  settings: {},
+};
+
+/** Digits only — no `+`, spaces or punctuation. */
+function digitsOnly(value: string) {
+  return value.replace(/\D/g, "");
+}
+
+export function setShopSettings(settings: Record<string, unknown>) {
+  const number = typeof settings["whatsapp_number"] === "string" ? settings["whatsapp_number"] : "";
+  const display =
+    typeof settings["whatsapp_display"] === "string" ? settings["whatsapp_display"] : "";
+  runtime = {
+    number: digitsOnly(number) || DEFAULT_WHATSAPP_NUMBER,
+    display: display || DEFAULT_WHATSAPP_DISPLAY,
+    settings,
+  };
+}
+
+export function getShopSettings() {
+  return runtime.settings;
+}
+
+export function whatsappNumber() {
+  return runtime.number;
+}
+
+export function whatsappDisplay() {
+  return runtime.display;
+}
 
 export function waLink(message: string) {
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  return `https://wa.me/${runtime.number}?text=${encodeURIComponent(message)}`;
 }
 
 export const CATEGORIES = [
