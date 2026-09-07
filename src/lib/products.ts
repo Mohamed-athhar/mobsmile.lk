@@ -1051,11 +1051,18 @@ export function getHotDeals(products: Product[]): Product[] {
 // admin-managed stock on TOP of it, additively, never replacing it.
 // ---------------------------------------------------------------------
 
-/** Static catalogue + whatever the live backend currently has, merged. */
+/**
+ * Static catalogue + the shop database + (optionally) the external backend.
+ * Database rows win over a static product with the same id, so anything
+ * edited in the admin area shows up straight away.
+ */
 export async function getAllProducts(): Promise<Product[]> {
-  const live = await fetchLiveProducts();
-  if (live.length === 0) return PRODUCTS;
-  return [...live, ...PRODUCTS];
+  const [db, live] = await Promise.all([fetchDbProducts(), fetchLiveProducts()]);
+  const dbIds = new Set(db.map((p) => p.id));
+  const base = PRODUCTS.filter((p) => !dbIds.has(p.id));
+  const merged = [...db, ...base];
+  if (live.length === 0) return merged;
+  return [...live, ...merged];
 }
 
 /**
