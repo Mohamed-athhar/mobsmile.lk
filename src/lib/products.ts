@@ -1071,6 +1071,8 @@ export async function getAllProducts(): Promise<Product[]> {
  * the static catalogue. Safe to call for any id.
  */
 export async function getProductAsync(id: string): Promise<Product | undefined> {
+  const fromDb = await fetchDbProduct(id);
+  if (fromDb) return fromDb;
   const live = await fetchLiveProduct(id);
   return live ?? getProduct(id);
 }
