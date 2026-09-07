@@ -6,6 +6,7 @@ import audio from "@/assets/p-audio.jpg";
 import accessory from "@/assets/p-accessory.jpg";
 import type { CategorySlug } from "./site";
 import { fetchLiveProducts, fetchLiveProduct } from "./mobsmile-api";
+import { fetchDbProducts, fetchDbProduct, fetchShopSettings } from "./catalog";
 import { useEffect, useState } from "react";
 
 export type Review = {
@@ -1091,6 +1092,7 @@ export function useCatalog(): { products: Product[]; loading: boolean } {
 
   useEffect(() => {
     let active = true;
+    void fetchShopSettings();
     getAllProducts()
       .then((all) => {
         if (active) setProducts(all);
